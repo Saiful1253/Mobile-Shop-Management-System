@@ -1,0 +1,59 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.log
+*.vspscc
+*.vssscc
+$tf/
+
+## Visual Studio
+.vs/
+*.userprefs
+*.sln.docstates
+
+## Rider
+.idea/
+*.sln.iml
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+## NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## SQL Server database files
+*.mdf
+*.ldf
+*.ndf
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Environment
+appsettings.Development.json
+appsettings.Local.json
+.env

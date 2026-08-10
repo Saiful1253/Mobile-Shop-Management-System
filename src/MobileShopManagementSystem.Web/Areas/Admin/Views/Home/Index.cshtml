@@ -1,0 +1,58 @@
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-value">@ViewBag.TotalProducts</div>
+            <div class="stat-label"><i class="bi bi-box-seam me-1"></i> Products</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="border-left-color: var(--success);">
+            <div class="stat-value">@ViewBag.TotalSales</div>
+            <div class="stat-label"><i class="bi bi-cart-check me-1"></i> Sales</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="border-left-color: var(--warning);">
+            <div class="stat-value">@ViewBag.TotalCustomers</div>
+            <div class="stat-label"><i class="bi bi-people me-1"></i> Customers</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="border-left-color: var(--info);">
+            <div class="stat-value">@ViewBag.TotalSuppliers</div>
+            <div class="stat-label"><i class="bi bi-truck me-1"></i> Suppliers</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <span><i class="bi bi-clock-history me-2"></i>Recent Activity</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-0">Recent sales, purchases, and inventory changes will appear here.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <span><i class="bi bi-lightning me-2"></i>Quick Actions</span>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a asp-controller="Sales" asp-action="Create" class="btn btn-primary"><i class="bi bi-cart-plus me-2"></i>Record New Sale</a>
+                    <a asp-controller="Products" asp-action="Create" class="btn btn-outline-primary"><i class="bi bi-plus-circle me-2"></i>Add Product</a>
+                    <a asp-controller="Customers" asp-action="Create" class="btn btn-outline-primary"><i class="bi bi-person-plus me-2"></i>New Customer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

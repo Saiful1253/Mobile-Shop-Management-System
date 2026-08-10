@@ -1,0 +1,42 @@
+@model MobileShopManagementSystem.Core.Models.Supplier
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Model.Id == 0 ? "Create Supplier" : "Edit Supplier";
+}
+<div class="page-header">
+    <h2><i class="bi bi-truck me-2 text-primary"></i>@ViewData["Title"]</h2>
+</div>
+<div class="card" style="max-width: 600px;">
+    <div class="card-body">
+        @using (Html.BeginForm(Model.Id == 0 ? "Create" : "Edit", "Suppliers", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Supplier name" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "email@example.com" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "+1 234 567 890" })
+                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", rows = 2, placeholder = "Full address" })
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i> Save</button>
+                <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back</a>
+            </div>
+        }
+    </div>
+</div>

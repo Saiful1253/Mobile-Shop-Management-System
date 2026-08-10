@@ -10,7 +10,7 @@ services:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS
-        value: http://+:8080
+        value: http://0.0.0.0:8080
       - key: ConnectionStrings__DefaultConnection
         fromDatabase:
           name: mobile-shop-db

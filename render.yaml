@@ -1,11 +1,12 @@
 services:
   - type: web
     name: mobile-shop-management
-    env: docker
+    env: dotnet
     region: singapore
     plan: free
     branch: main
-    dockerfilePath: ./Dockerfile
+    buildCommand: dotnet publish src/MobileShopManagementSystem.Web/MobileShopManagementSystem.Web.csproj -c Release -o ./publish
+    startCommand: dotnet ./publish/MobileShopManagementSystem.Web.dll
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production

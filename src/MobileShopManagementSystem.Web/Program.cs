@@ -2,14 +2,35 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MobileShopManagementSystem.Data;
 using MobileShopManagementSystem.Core.Models;
+using Pomelo.EntityFrameworkCore.MySql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-    "Server=localhost\\SQLEXPRESS;Database=MobileShopDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+string connectionString;
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+if (!string.IsNullOrEmpty(databaseUrl) && databaseUrl.StartsWith("mysql://", StringComparison.OrdinalIgnoreCase))
+{
+    var uri = new Uri(databaseUrl);
+    var userInfo = uri.UserInfo.Split(':');
+    connectionString = $"Server={uri.Host};Port={uri.Port};Database={uri.LocalPath.TrimStart('/')};User={userInfo[0]};Password={userInfo[1]};";
+}
+else
+{
+    connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+        "Server=localhost\\SQLEXPRESS;Database=MobileShopDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+}
+
+if (databaseUrl != null && databaseUrl.StartsWith("mysql://", StringComparison.OrdinalIgnoreCase))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {

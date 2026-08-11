@@ -5,8 +5,8 @@ using MobileShopManagementSystem.Core.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? 
-    "Host=localhost;Database=MobileShopDb;Username=postgres;Password=postgres";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+    builder.Configuration["DATABASE_URL"] ?? throw new InvalidOperationException("Connection string not found");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));

@@ -2,14 +2,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MobileShopManagementSystem.Data;
 using MobileShopManagementSystem.Core.Models;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? 
-    "Server=(localdb)\\mssqllocaldb;Database=MobileShopDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+    "Host=localhost;Database=MobileShopDb;Username=postgres;Password=postgres";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MobileShopManagementSystem.Data;
 using MobileShopManagementSystem.Core.Models;
+using Pomelo.EntityFrameworkCore.MySql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     builder.Configuration["DATABASE_URL"] ?? throw new InvalidOperationException("Connection string not found");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {

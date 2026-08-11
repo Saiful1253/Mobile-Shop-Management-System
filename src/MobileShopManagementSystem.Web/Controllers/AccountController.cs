@@ -22,6 +22,13 @@ namespace MobileShopManagementSystem.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult Login(string? returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult AdminLogin(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;

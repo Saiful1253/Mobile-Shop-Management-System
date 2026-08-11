@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<MobileShopManagementSystem.Core.Models.ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,26 +41,15 @@
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Customers" asp-action="Index"><i class="bi bi-people"></i> Customers</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Suppliers" asp-action="Index"><i class="bi bi-truck"></i> Suppliers</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-bar-chart"></i> Reports</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Reports" asp-action="SalesReport">Sales Report</a></li>
-                                <li><a class="dropdown-item" asp-controller="Reports" asp-action="PurchaseReport">Purchase Report</a></li>
-                                <li><a class="dropdown-item" asp-controller="Reports" asp-action="InventoryReport">Inventory Report</a></li>
-                            </ul>
-                        </li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Suppliers" asp-action="Index"><i class="bi bi-truck"></i> Suppliers</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person-lock"></i> Login</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-bar-chart"></i> Reports</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-controller="Account" asp-action="AdminLogin"><i class="bi bi-shield-lock me-2"></i>Admin Login</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" asp-controller="Account" asp-action="CustomerLogin"><i class="bi bi-person me-2"></i>Customer Login</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="SalesReport">Sales Report</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="PurchaseReport">Purchase Report</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="InventoryReport">Inventory Report</a></li>
                         </ul>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
-                    @await Html.PartialAsync("_LoginPartial")
                 </ul>
                 </div>
             </div>
@@ -66,7 +57,7 @@
 
         <div class="d-flex">
             <nav id="sidebar" class="sidebar d-none d-md-block">
-                <div class="position-sticky">
+                <div class="sidebar-content">
                     <h6 class="sidebar-heading">Quick Links</h6>
                     <ul class="nav flex-column">
                         <li class="nav-item"><a class="nav-link" asp-controller="Sales" asp-action="Create"><i class="bi bi-cart-plus"></i> New Sale</a></li>
@@ -83,6 +74,14 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Customers" asp-action="Index"><i class="bi bi-people"></i> Manage Customers</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Suppliers" asp-action="Index"><i class="bi bi-truck"></i> Manage Suppliers</a></li>
                     </ul>
+
+                    <div class="logout-section mt-auto">
+                        <form asp-controller="Account" asp-action="LogOff" method="post" class="d-inline">
+                            <button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-start">
+                                <i class="bi bi-box-arrow-right"></i> Log out
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </nav>
             <main class="flex-grow-1">

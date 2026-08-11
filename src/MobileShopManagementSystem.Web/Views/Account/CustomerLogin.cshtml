@@ -19,7 +19,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
             padding: 2rem;
         }
         .login-card {
@@ -67,13 +67,20 @@
             border-radius: 0.5rem;
             background: linear-gradient(135deg, #059669 0%, #047857 100%);
             border: none;
+            color: #fff;
         }
         .btn-login:hover {
             background: linear-gradient(135deg, #047857 0%, #065f46 100%);
             transform: translateY(-1px);
             box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.3);
+            color: #fff;
         }
         .text-danger { font-size: 0.8rem; margin-top: 0.25rem; }
+        .alert {
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
@@ -85,6 +92,12 @@
                 <p>Sign in to your account</p>
             </div>
             <div class="login-card-body">
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger mb-3">
+                        @Html.ValidationSummary(true)
+                    </div>
+                }
                 @using (Html.BeginForm("CustomerLogin", "Account", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()

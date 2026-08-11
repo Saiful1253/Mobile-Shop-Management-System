@@ -1,14 +1,14 @@
 @model MobileShopManagementSystem.Core.Models.Customer
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = Model.Id == 0 ? "Create Customer" : "Edit Customer";
+    ViewData["Title"] = "Create Customer";
 }
 <div class="page-header">
     <h2><i class="bi bi-people me-2 text-primary"></i>@ViewData["Title"]</h2>
 </div>
 <div class="card" style="max-width: 600px;">
     <div class="card-body">
-        @using (Html.BeginForm(Model.Id == 0 ? "Create" : "Edit", "Customers", FormMethod.Post))
+        @using (Html.BeginForm("Create", "Customers", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.Id)

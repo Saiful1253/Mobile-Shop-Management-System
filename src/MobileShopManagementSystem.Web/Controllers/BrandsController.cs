@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MobileShopManagementSystem.Services.Interfaces;
 using MobileShopManagementSystem.Core.Models;
-using MobileShopManagementSystem.Web.Models;
 
 namespace MobileShopManagementSystem.Web.Controllers
 {

@@ -33,6 +33,26 @@ namespace MobileShopManagementSystem.Data
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            builder.Entity<Purchase>()
+                .Property(p => p.TotalAmount)
+                .HasPrecision(18, 2);
+
+            builder.Entity<PurchaseItem>()
+                .Property(p => p.UnitPrice)
+                .HasPrecision(18, 2);
+
+            builder.Entity<Sale>()
+                .Property(s => s.TotalAmount)
+                .HasPrecision(18, 2);
+
+            builder.Entity<SaleItem>()
+                .Property(s => s.UnitPrice)
+                .HasPrecision(18, 2);
         }
     }
 }

@@ -72,9 +72,9 @@ namespace MobileShopManagementSystem.Services.Services
         public async Task AddAsync(Purchase purchase) => await _repository.AddAsync(purchase);
         public async Task<IEnumerable<Purchase>> GetAllAsync() => await _repository.GetAllAsync();
         public async Task<Purchase?> GetByIdAsync(int id) => await _repository.GetByIdAsync(id);
-        public async Task<IEnumerable<Supplier>> GetSuppliersAsync()
+        public Task<IEnumerable<Supplier>> GetSuppliersAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult<IEnumerable<Supplier>>(new List<Supplier>());
         }
     }
 
@@ -86,9 +86,9 @@ namespace MobileShopManagementSystem.Services.Services
         public async Task AddAsync(Sale sale) => await _repository.AddAsync(sale);
         public async Task<IEnumerable<Sale>> GetAllAsync() => await _repository.GetAllAsync();
         public async Task<Sale?> GetByIdAsync(int id) => await _repository.GetByIdAsync(id);
-        public async Task<IEnumerable<Customer>> GetCustomersAsync()
+        public Task<IEnumerable<Customer>> GetCustomersAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult<IEnumerable<Customer>>(new List<Customer>());
         }
     }
 }

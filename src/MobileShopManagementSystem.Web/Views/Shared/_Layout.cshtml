@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    @if (ViewData["HideLayout"] == null || !(bool)ViewData["HideLayout"])
+    @if (ViewData["HideLayout"] == null || !(ViewData["HideLayout"] is bool hideLayout) || !hideLayout)
     {
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">

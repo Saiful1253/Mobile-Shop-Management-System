@@ -225,6 +225,9 @@ nav a, nav button {
     color: #9ca3af;
     text-align: center;
 }
+.form-input:not(:placeholder-shown) {
+    text-align: left;
+}
 .form-input-no-icon {
     padding-left: 14px;
 }

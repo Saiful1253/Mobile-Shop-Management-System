@@ -38,7 +38,8 @@
                     <li class="nav-item"><a class="nav-link active" asp-area="Customer" asp-controller="Home" asp-action="Index"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
                 </ul>
                 <div class="logout-section mt-auto">
-                    <form asp-controller="Account" asp-action="LogOff" method="post" class="d-inline">
+                    <form id="customerLogoutForm" action="/Account/LogOff" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
                         <button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-start">
                             <i class="bi bi-box-arrow-right"></i> Log out
                         </button>

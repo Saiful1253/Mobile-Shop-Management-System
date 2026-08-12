@@ -9,7 +9,6 @@ using System.Linq;
 
 namespace MobileShopManagementSystem.Web.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -22,6 +21,7 @@ namespace MobileShopManagementSystem.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -29,6 +29,7 @@ namespace MobileShopManagementSystem.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult AdminLogin(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -37,6 +38,7 @@ namespace MobileShopManagementSystem.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> AdminLogin(LoginViewModel model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -57,6 +59,7 @@ namespace MobileShopManagementSystem.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult CustomerLogin(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -65,6 +68,7 @@ namespace MobileShopManagementSystem.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> CustomerLogin(LoginViewModel model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -85,14 +89,16 @@ namespace MobileShopManagementSystem.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult AccessDenied() => View();
 
         private IActionResult RedirectToArea(string area, string controller, string action)

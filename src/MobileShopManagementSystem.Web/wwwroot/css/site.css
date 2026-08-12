@@ -223,6 +223,7 @@ nav a, nav button {
 }
 .form-input::placeholder {
     color: #9ca3af;
+    text-align: center;
 }
 .form-input-no-icon {
     padding-left: 14px;

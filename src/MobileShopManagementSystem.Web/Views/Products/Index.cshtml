@@ -1,37 +1,26 @@
-@model IEnumerable<MobileShopManagementSystem.Core.Models.Product>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Products";
+    Layout = "_Layout";
 }
-<div class="page-header">
-    <h2><i class="bi bi-box-seam me-2 text-primary"></i>Products</h2>
-    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Create New</a>
-</div>
-<div class="card">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead><tr><th>Name</th><th>Brand</th><th>Category</th><th>Price</th><th>Stock</th><th class="text-end">Actions</th></tr></thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td><strong>@item.Name</strong></td>
-                            <td>@item.Brand?.Name</td>
-                            <td>@item.Category?.Name</td>
-                            <td>@item.Price.ToString("C")</td>
-                            <td><span class="badge @(item.StockQuantity > 0 ? "bg-success" : "bg-danger")">@item.StockQuantity</span></td>
-                            <td class="text-end">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Delete this product?')">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<h2>Products</h2>
+<a class="btn" asp-action="Create">Add Product</a>
+<table>
+    <thead><tr><th>Name</th><th>Price</th><th>Stock</th><th>Brand</th><th>Category</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Price</td>
+                <td>@p.StockQuantity</td>
+                <td>@p.Brand?.Name</td>
+                <td>@p.Category?.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@p.Id" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Delete?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

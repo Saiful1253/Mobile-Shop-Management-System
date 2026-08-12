@@ -1,35 +1,24 @@
-@model IEnumerable<MobileShopManagementSystem.Core.Models.Supplier>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Suppliers";
+    Layout = "_Layout";
 }
-<div class="page-header">
-    <h2><i class="bi bi-truck me-2 text-primary"></i>Suppliers</h2>
-    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Create New</a>
-</div>
-<div class="card">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th class="text-end">Actions</th></tr></thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td><strong>@item.Name</strong></td>
-                            <td>@item.Email</td>
-                            <td>@item.Phone</td>
-                            <td>@item.Address</td>
-                            <td class="text-end">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
-                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Delete this supplier?')">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<h2>Suppliers</h2>
+<a class="btn" asp-action="Create">Add Supplier</a>
+<table>
+    <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.Name</td>
+                <td>@s.Phone</td>
+                <td>@s.Email</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@s.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@s.Id" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Delete?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

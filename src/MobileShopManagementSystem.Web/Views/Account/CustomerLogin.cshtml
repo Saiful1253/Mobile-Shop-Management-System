@@ -1,127 +1,18 @@
 @model MobileShopManagementSystem.Web.Models.LoginViewModel
 @{
-    Layout = null;
-    ViewData["Title"] = "Customer Login";
+    Layout = "_Layout";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mobile Shop MS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-            padding: 2rem;
-        }
-        .login-card {
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            width: 100%;
-            max-width: 420px;
-            overflow: hidden;
-        }
-        .login-card-header {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            color: #fff;
-            padding: 2.5rem 2rem 2rem;
-            text-align: center;
-        }
-        .login-card-header .logo-icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
-        .login-card-header .logo-icon i { font-size: 2rem; }
-        .login-card-header h2 { color: #fff; margin-bottom: 0.35rem; font-weight: 700; }
-        .login-card-header p { color: rgba(255,255,255,0.85); margin: 0; font-size: 0.9rem; }
-        .login-card-body { padding: 2rem; }
-        .form-control {
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-        }
-        .form-control:focus {
-            border-color: #059669;
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-        }
-        .btn-login {
-            width: 100%;
-            padding: 0.75rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            border: none;
-            color: #fff;
-        }
-        .btn-login:hover {
-            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.3);
-            color: #fff;
-        }
-        .text-danger { font-size: 0.8rem; margin-top: 0.25rem; }
-        .alert {
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 0.85rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-card-header">
-                <div class="logo-icon"><i class="bi bi-person-circle"></i></div>
-                <h2>Customer Login</h2>
-                <p>Sign in to your account</p>
-            </div>
-            <div class="login-card-body">
-                @if (!ViewData.ModelState.IsValid)
-                {
-                    <div class="alert alert-danger mb-3">
-                        @Html.ValidationSummary(true)
-                    </div>
-                }
-                @using (Html.BeginForm("CustomerLogin", "Account", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Email</label>
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "you@example.com", autocomplete = "email" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Password</label>
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter password", autocomplete = "current-password" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-4 form-check">
-                        @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
-                        <label class="form-check-label" for="RememberMe">Remember me</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-login">
-                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
-                    </button>
-                }
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<div class="login-container">
+    <h2>Customer Login</h2>
+    <p>Sign in with your customer account</p>
+    <form asp-action="CustomerLogin" method="post" class="login-form">
+        <div asp-validation-summary="All"></div>
+        <input asp-for="Email" placeholder="Email address" />
+        <input asp-for="Password" placeholder="Password" type="password" />
+        <label>
+            <input asp-for="RememberMe" type="checkbox" /> Remember me
+        </label>
+        <button type="submit">Sign In</button>
+    </form>
+    <a asp-action="Login">Back to Login</a>
+</div>

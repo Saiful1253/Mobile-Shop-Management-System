@@ -53,12 +53,5 @@ namespace MobileShopManagementSystem.Web.Controllers
             SetSuccessMessage("Customer deleted successfully.");
             return RedirectToAction(nameof(Index));
         }
-
-        public async Task<IActionResult> Details(int id)
-        {
-            var customer = await _service.GetByIdAsync(id);
-            if (customer == null) return NotFound();
-            return View(customer);
-        }
     }
 }

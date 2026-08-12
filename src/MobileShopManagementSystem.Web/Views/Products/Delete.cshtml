@@ -1,22 +1,10 @@
 @model MobileShopManagementSystem.Core.Models.Product
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Delete Product";
+    Layout = "_Layout";
 }
-<div class="page-header">
-    <h2><i class="bi bi-box-seam me-2 text-primary"></i>Delete Product</h2>
-</div>
-<div class="card" style="max-width: 500px;">
-    <div class="card-body">
-        <p class="text-muted mb-4">Are you sure you want to delete <strong>@Model.Name</strong>?</p>
-        @using (Html.BeginForm("Delete", "Products", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Id)
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i> Yes, Delete</button>
-                <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Cancel</a>
-            </div>
-        }
-    </div>
-</div>
+<h2>Delete Product</h2>
+<p>Are you sure you want to delete @Model.Name?</p>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Delete</button>
+</form>

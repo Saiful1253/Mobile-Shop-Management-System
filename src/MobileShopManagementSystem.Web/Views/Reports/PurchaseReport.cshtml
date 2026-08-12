@@ -1,12 +1,17 @@
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Purchase Report";
+    Layout = "_Layout";
 }
-<div class="page-header">
-    <h2><i class="bi bi-bar-chart me-2 text-primary"></i>Purchase Report</h2>
-</div>
-<div class="card">
-    <div class="card-body">
-        <p class="text-muted">Purchase analytics and reporting coming soon.</p>
-    </div>
-</div>
+<h2>Purchase Report</h2>
+<table>
+    <thead><tr><th>Date</th><th>Supplier</th><th>Total Amount</th></tr></thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.PurchaseDate.ToShortDateString()</td>
+                <td>@p.Supplier?.Name</td>
+                <td>@p.TotalAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>

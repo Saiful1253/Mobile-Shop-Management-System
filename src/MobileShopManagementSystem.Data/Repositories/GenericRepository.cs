@@ -4,10 +4,10 @@ using MobileShopManagementSystem.Core.Models;
 
 namespace MobileShopManagementSystem.Data.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly ApplicationDbContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
 
         public GenericRepository(ApplicationDbContext context)
         {
@@ -15,9 +15,15 @@ namespace MobileShopManagementSystem.Data.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
 
-        public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
 
         public async Task AddAsync(T entity)
         {
@@ -40,7 +46,5 @@ namespace MobileShopManagementSystem.Data.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<bool> ExistsAsync(int id) => await _dbSet.FindAsync(id) != null;
     }
 }

@@ -11,6 +11,8 @@ namespace MobileShopManagementSystem.Data
 
             if (!await roleManager.RoleExistsAsync("Admin"))
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
+            if (!await roleManager.RoleExistsAsync("Staff"))
+                await roleManager.CreateAsync(new IdentityRole("Staff"));
             if (!await roleManager.RoleExistsAsync("Customer"))
                 await roleManager.CreateAsync(new IdentityRole("Customer"));
 
@@ -29,9 +31,22 @@ namespace MobileShopManagementSystem.Data
                 var result = await userManager.CreateAsync(admin, "Tanvin0123!");
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "Admin");
+                await userManager.AddToRoleAsync(admin, "Admin");
+            }
+
+            var customerEmail = "customer@mobileshop.com";
+            var customer = await userManager.FindByEmailAsync(customerEmail);
+
+            if (customer == null)
+            {
+                customer = new ApplicationUser { FullName = "Customer", UserName = customerEmail, Email = customerEmail, EmailConfirmed = true };
+                var custResult = await userManager.CreateAsync(customer, "Customer123!");
+                if (custResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(customer, "Customer");
                 }
             }
         }
     }
+}
 }

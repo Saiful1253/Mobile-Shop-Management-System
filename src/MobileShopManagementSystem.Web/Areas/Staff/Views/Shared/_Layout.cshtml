@@ -1,0 +1,26 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Staff Panel</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <nav>
+        <a asp-area="Staff" asp-controller="Home" asp-action="Index">Dashboard</a>
+        <a asp-controller="Products" asp-action="Index">Products</a>
+        <a asp-controller="Customers" asp-action="Index">Customers</a>
+        <a asp-controller="Sales" asp-action="Index">Sales</a>
+        <a asp-controller="Purchases" asp-action="Index">Purchases</a>
+        <form asp-controller="Account" asp-action="LogOff" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    <div class="content">
+        @RenderBody()
+    </div>
+</body>
+</html>

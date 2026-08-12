@@ -1,14 +1,12 @@
 namespace MobileShopManagementSystem.Core.Models
 {
-    public class SaleItem
+    public class SaleItem : BaseEntity
     {
-        public int Id { get; set; }
         public int SaleId { get; set; }
         public Sale Sale { get; set; } = null!;
         public int ProductId { get; set; }
         public Product Product { get; set; } = null!;
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
-        public decimal SubTotal => Quantity * UnitPrice;
     }
 }

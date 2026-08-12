@@ -7,7 +7,15 @@ namespace MobileShopManagementSystem.Web.Controllers
     public class ProductsController : BaseController
     {
         private readonly IProductService _service;
-        public ProductsController(IProductService service) => _service = service;
+        private readonly IBrandService _brandService;
+        private readonly ICategoryService _categoryService;
+
+        public ProductsController(IProductService service, IBrandService brandService, ICategoryService categoryService)
+        {
+            _service = service;
+            _brandService = brandService;
+            _categoryService = categoryService;
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -15,13 +23,21 @@ namespace MobileShopManagementSystem.Web.Controllers
             return View(products);
         }
 
-        public IActionResult Create() => View();
+        public async Task<IActionResult> Create()
+        {
+            await PopulateDropdowns();
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
-            if (!ModelState.IsValid) return View(product);
+            if (!ModelState.IsValid)
+            {
+                await PopulateDropdowns();
+                return View(product);
+            }
             await _service.AddAsync(product);
             SetSuccessMessage("Product created successfully.");
             return RedirectToAction(nameof(Index));
@@ -31,6 +47,7 @@ namespace MobileShopManagementSystem.Web.Controllers
         {
             var product = await _service.GetByIdAsync(id);
             if (product == null) return NotFound();
+            await PopulateDropdowns(product.BrandId, product.CategoryId);
             return View(product);
         }
 
@@ -39,7 +56,11 @@ namespace MobileShopManagementSystem.Web.Controllers
         public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.Id) return BadRequest();
-            if (!ModelState.IsValid) return View(product);
+            if (!ModelState.IsValid)
+            {
+                await PopulateDropdowns(product.BrandId, product.CategoryId);
+                return View(product);
+            }
             await _service.UpdateAsync(product);
             SetSuccessMessage("Product updated successfully.");
             return RedirectToAction(nameof(Index));
@@ -54,11 +75,12 @@ namespace MobileShopManagementSystem.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Details(int id)
+        private async Task PopulateDropdowns(int? selectedBrand = null, int? selectedCategory = null)
         {
-            var product = await _service.GetByIdAsync(id);
-            if (product == null) return NotFound();
-            return View(product);
+            var brands = await _brandService.GetAllAsync();
+            var categories = await _categoryService.GetAllAsync();
+            ViewBag.Brands = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(brands, "Id", "Name", selectedBrand);
+            ViewBag.Categories = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(categories, "Id", "Name", selectedCategory);
         }
     }
 }

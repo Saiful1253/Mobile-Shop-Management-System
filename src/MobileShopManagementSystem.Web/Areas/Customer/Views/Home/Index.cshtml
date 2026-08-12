@@ -1,37 +1,4 @@
 @{
-    Layout = "~/Areas/Customer/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Customer Dashboard";
+    Layout = "_Layout";
 }
-<div class="dashboard-welcome">
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <div>
-            <h1><i class="bi bi-person-circle me-2"></i>Welcome, Customer</h1>
-            <p class="mb-0">Browse products and view your purchase history.</p>
-        </div>
-    </div>
-</div>
-
-<div class="row g-3">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <span><i class="bi bi-box-seam me-2"></i>Browse Products</span>
-            </div>
-            <div class="card-body">
-                <p class="text-muted mb-3">Explore our latest mobile phones and accessories.</p>
-                <a asp-controller="Products" asp-action="Index" class="btn btn-primary">View Products</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <span><i class="bi bi-receipt me-2"></i>My Purchases</span>
-            </div>
-            <div class="card-body">
-                <p class="text-muted mb-3">View your purchase history and invoices.</p>
-                <a asp-controller="Sales" asp-action="Index" class="btn btn-outline-primary">View History</a>
-            </div>
-        </div>
-    </div>
-</div>
+<h2>Welcome Customer</h2>

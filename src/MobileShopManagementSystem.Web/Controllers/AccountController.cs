@@ -22,9 +22,10 @@ namespace MobileShopManagementSystem.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string? returnUrl = null)
+        public IActionResult Login(string? returnUrl = null, string? tab = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["Tab"] = tab;
             return View();
         }
 
@@ -83,6 +84,75 @@ namespace MobileShopManagementSystem.Web.Controllers
                     return RedirectToArea("Customer", "Home", "Index");
                 await _signInManager.SignOutAsync();
                 ModelState.AddModelError("", "Access denied. Customer account only.");
+            }
+            ModelState.AddModelError("", "Invalid email or password.");
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string? returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterViewModel model, string? returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = new ApplicationUser { FullName = model.FullName, UserName = model.Email, Email = model.Email, EmailConfirmed = true, PhoneNumber = model.Phone };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Customer");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+            }
+            foreach (var error in result.Errors)
+                ModelState.AddModelError("", error.Description);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    await _signInManager.SignOutAsync();
+                    ModelState.AddModelError("", "Invalid email or password.");
+                    return View(model);
+                }
+
+                if (model.Tab == "customer")
+                {
+                    if (await _userManager.IsInRoleAsync(user, "Customer"))
+                        return RedirectToAction("Index", "Home", new { area = "Customer" });
+                    await _signInManager.SignOutAsync();
+                    ModelState.AddModelError("", "Access denied. Customer account only.");
+                }
+                else
+                {
+                    if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Staff"))
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    await _signInManager.SignOutAsync();
+                    ModelState.AddModelError("", "Access denied. Staff account only.");
+                }
             }
             ModelState.AddModelError("", "Invalid email or password.");
             return View(model);

@@ -1,117 +1,145 @@
+@model MobileShopManagementSystem.Web.Models.LoginViewModel
 @{
-    Layout = null;
-    ViewData["Title"] = "Welcome - Mobile Shop MS";
+    Layout = "_Layout";
+    var tab = ViewData["Tab"] as string ?? "staff";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-            padding: 2rem;
-        }
-        .login-card {
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            width: 100%;
-            max-width: 520px;
-            overflow: hidden;
-        }
-        .login-card-header {
-            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-            color: #fff;
-            padding: 2.5rem 2rem 2rem;
-            text-align: center;
-        }
-        .login-card-header .logo-icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
-        .login-card-header .logo-icon i { font-size: 2rem; }
-        .login-card-header h2 { color: #fff; margin-bottom: 0.35rem; font-weight: 700; }
-        .login-card-header p { color: rgba(255,255,255,0.85); margin: 0; font-size: 0.9rem; }
-        .login-card-body { padding: 2rem; }
-        .role-card {
-            border: 2px solid #e2e8f0;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .role-card:hover {
-            border-color: #4f46e5;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.15);
-            color: inherit;
-        }
-        .role-card i {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-        .role-card h5 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        .role-card p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-        .role-admin i { color: #4f46e5; }
-        .role-customer i { color: #059669; }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-card-header">
-                <div class="logo-icon"><i class="bi bi-phone"></i></div>
-                <h2>Mobile Shop MS</h2>
-                <p>Select your role to continue</p>
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-tabs">
+            <a asp-action="Login" asp-controller="Account" asp-route-tab="staff" class="tab-btn @(tab == "staff" ? "active" : "")">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Staff Terminal
+            </a>
+            <a asp-action="Login" asp-controller="Account" asp-route-tab="customer" class="tab-btn @(tab == "customer" ? "active" : "")">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                Customer Portal
+            </a>
+        </div>
+
+        <div class="login-header">
+            <div class="lock-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
             </div>
-            <div class="login-card-body">
-                <div class="row g-3">
-                    <div class="col-6">
-                        <a asp-controller="Account" asp-action="AdminLogin" class="role-card role-admin">
-                            <i class="bi bi-shield-lock"></i>
-                            <h5>Admin</h5>
-                            <p>Manage shop</p>
-                        </a>
+            <h2>@(tab == "staff" ? "Staff Terminal Login" : "Customer Portal Login")</h2>
+            <p>@(tab == "staff" ? "POS, Inventory, Repair Workbench & Admin Portal Access" : "Order history, support & service tracking")</p>
+        </div>
+
+        @if (tab == "staff")
+        {
+            <div class="demo-fill">
+                <div class="demo-label">Role User</div>
+                <div class="demo-cards">
+                    <div class="demo-card" onclick="fillDemo('admin')">
+                        <div class="demo-role">ADMIN</div>
                     </div>
-                    <div class="col-6">
-                        <a asp-controller="Account" asp-action="CustomerLogin" class="role-card role-customer">
-                            <i class="bi bi-person-circle"></i>
-                            <h5>Customer</h5>
-                            <p>Browse & buy</p>
-                        </a>
+                    <div class="demo-card" onclick="fillDemo('sales')">
+                        <div class="demo-role">SALES</div>
+                    </div>
+                    <div class="demo-card" onclick="fillDemo('tech')">
+                        <div class="demo-role">TECHNICIAN</div>
                     </div>
                 </div>
             </div>
+        }
+
+        <form asp-action="Login" asp-controller="Account" method="post" class="login-form" id="loginForm">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="validation-summary"></div>
+            <input type="hidden" name="tab" value="@tab" />
+            
+            <div class="form-group">
+                <label class="form-label">@(tab == "staff" ? "WORK EMAIL / ACCOUNT" : "EMAIL / ACCOUNT")</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <input asp-for="Email" class="form-input" placeholder="@(tab == "staff" ? "name@company.com" : "your@email.com")" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">SYSTEM PASSWORD</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <input asp-for="Password" type="password" class="form-input" placeholder="Enter password" />
+                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                @if (tab == "staff")
+                {
+                    <a href="#" class="reset-link">RESET</a>
+                }
+            </div>
+
+            <div class="form-group remember-me">
+                <label>
+                    <input asp-for="RememberMe" type="checkbox" />
+                    <span>Remember me</span>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                @(tab == "staff" ? "Access Staff Workspace" : "Access Customer Portal")
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </button>
+        </form>
+
+        @if (tab == "customer")
+        {
+            <div class="register-link">
+                <span>Don't have an account?</span>
+                <a asp-action="Register" asp-controller="Account">Create New Account</a>
+            </div>
+        }
+
+        <div class="version-info">
+            <span class="version-dot"></span>
+            MOBILE SHOP PORTAL & SYSTEM V2.4
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('Password');
+        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+    }
+
+    function fillDemo(type) {
+        const emailInput = document.getElementById('Email');
+        const passwordInput = document.getElementById('Password');
+        switch(type) {
+            case 'admin':
+                emailInput.value = 'tanvinislam3273@gmail.com';
+                passwordInput.value = 'Tanvin0123!';
+                break;
+            case 'sales':
+                emailInput.value = 'sales@mobileshop.com';
+                passwordInput.value = 'Sales123!';
+                break;
+            case 'tech':
+                emailInput.value = 'tech@mobileshop.com';
+                passwordInput.value = 'Tech123!';
+                break;
+        }
+    }
+</script>

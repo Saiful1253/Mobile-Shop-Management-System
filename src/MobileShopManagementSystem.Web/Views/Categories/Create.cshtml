@@ -1,30 +1,10 @@
 @model MobileShopManagementSystem.Core.Models.Category
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Create Category";
+    Layout = "_Layout";
 }
-<div class="page-header">
-    <h2><i class="bi bi-folder me-2 text-primary"></i>@ViewData["Title"]</h2>
-</div>
-<div class="card" style="max-width: 600px;">
-    <div class="card-body">
-        @using (Html.BeginForm("Create", "Categories", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Id)
-            <div class="mb-3">
-                <label class="form-label">Name</label>
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter category name" })
-                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Description</label>
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3, placeholder = "Optional description" })
-            </div>
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i> Save</button>
-                <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back</a>
-            </div>
-        }
-    </div>
-</div>
+<h2>Create Category</h2>
+<form asp-action="Create" method="post">
+    <input asp-for="Name" placeholder="Category Name" />
+    <input asp-for="Description" placeholder="Description" />
+    <button type="submit">Save</button>
+</form>

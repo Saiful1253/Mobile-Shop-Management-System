@@ -1,31 +1,21 @@
-@model IEnumerable<MobileShopManagementSystem.Core.Models.Purchase>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Purchases";
+    Layout = "_Layout";
 }
-<div class="page-header">
-    <h2><i class="bi bi-cart-plus me-2 text-primary"></i>Purchases</h2>
-    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> New Purchase</a>
-</div>
-<div class="card">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead><tr><th>Date</th><th>Supplier</th><th class="text-end">Total</th><th class="text-end">Actions</th></tr></thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.PurchaseDate.ToString("dd MMM yyyy")</td>
-                            <td>@item.Supplier?.Name</td>
-                            <td class="text-end fw-semibold">@item.TotalAmount.ToString("C")</td>
-                            <td class="text-end">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<h2>Purchases</h2>
+<a class="btn" asp-action="Create">Record Purchase</a>
+<table>
+    <thead><tr><th>Date</th><th>Supplier</th><th>Total Amount</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.PurchaseDate.ToShortDateString()</td>
+                <td>@p.Supplier?.Name</td>
+                <td>@p.TotalAmount</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@p.Id">View</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MobileShopManagementSystem.Data;
 using MobileShopManagementSystem.Core.Models;
+using MobileShopManagementSystem.Core.Interfaces;
+using MobileShopManagementSystem.Data.Repositories;
+using MobileShopManagementSystem.Services.Interfaces;
+using MobileShopManagementSystem.Services.Services;
 using Pomelo.EntityFrameworkCore.MySql;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,21 +53,21 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.IBrandRepository, MobileShopManagementSystem.Data.Repositories.BrandRepository>();
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.ICategoryRepository, MobileShopManagementSystem.Data.Repositories.CategoryRepository>();
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.IProductRepository, MobileShopManagementSystem.Data.Repositories.ProductRepository>();
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.ICustomerRepository, MobileShopManagementSystem.Data.Repositories.CustomerRepository>();
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.ISupplierRepository, MobileShopManagementSystem.Data.Repositories.SupplierRepository>();
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.IPurchaseRepository, MobileShopManagementSystem.Data.Repositories.PurchaseRepository>();
-builder.Services.AddScoped<MobileShopManagementSystem.Core.Interfaces.ISaleRepository, MobileShopManagementSystem.Data.Repositories.SaleRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.IBrandService, MobileShopManagementSystem.Services.Services.BrandService>();
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.ICategoryService, MobileShopManagementSystem.Services.Services.CategoryService>();
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.IProductService, MobileShopManagementSystem.Services.Services.ProductService>();
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.ICustomerService, MobileShopManagementSystem.Services.Services.CustomerService>();
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.ISupplierService, MobileShopManagementSystem.Services.Services.SupplierService>();
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.IPurchaseService, MobileShopManagementSystem.Services.Services.PurchaseService>();
-builder.Services.AddScoped<MobileShopManagementSystem.Services.Interfaces.ISaleService, MobileShopManagementSystem.Services.Services.SaleService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<IPurchaseService, PurchaseService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
 
 builder.Services.AddControllersWithViews()
     .AddRazorOptions(options =>
@@ -99,6 +103,8 @@ app.MapControllerRoute(
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.MapRazorPages();
+
+app.Urls.Add("http://localhost:5000");
 
 using (var scope = app.Services.CreateScope())
 {

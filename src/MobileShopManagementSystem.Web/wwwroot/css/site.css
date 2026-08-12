@@ -199,7 +199,7 @@ nav a, nav button {
 }
 .input-icon {
     position: absolute;
-    left: 12px;
+    left: 8px;
     top: 50%;
     transform: translateY(-50%);
     color: #9ca3af;

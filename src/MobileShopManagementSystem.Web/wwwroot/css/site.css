@@ -186,9 +186,9 @@ nav a, nav button {
 }
 .form-label {
     display: block;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    color: #6b7280;
+    color: #1f2937;
     letter-spacing: 0.5px;
     margin-bottom: 8px;
 }
@@ -223,6 +223,9 @@ nav a, nav button {
 }
 .form-input::placeholder {
     color: #9ca3af;
+}
+.form-input-no-icon {
+    padding-left: 14px;
 }
 .toggle-password {
     position: absolute;
